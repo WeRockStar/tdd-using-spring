@@ -2,6 +2,7 @@ package com.bank.service.internal;
 
 import com.bank.domain.Account;
 import com.bank.domain.InsufficientFundsException;
+import com.bank.domain.InvalidTimePolicy;
 import com.bank.domain.TransferReceipt;
 import com.bank.repository.AccountRepository;
 import com.bank.service.FeePolicy;
@@ -30,12 +31,12 @@ public class DefaultTransferService implements TransferService {
 
     @Override
     @Transactional
-    public TransferReceipt transfer(double amount, String srcAcctId, String dstAcctId) throws InsufficientFundsException {
+    public TransferReceipt transfer(double amount, String srcAcctId, String dstAcctId) throws InsufficientFundsException, InvalidTimePolicy {
         if (amount < minimumTransferAmount) {
             throw new IllegalArgumentException(format("transfer amount must be at least $%.2f", minimumTransferAmount));
         }
         if (!timePolicy.isTimeValid()) {
-            throw new IllegalArgumentException("Not allow transfer at 22:00 - 05:59");
+            throw new InvalidTimePolicy("Not allow transfer at 22:00 - 05:59");
         }
         TransferReceipt receipt = new TransferReceipt();
 

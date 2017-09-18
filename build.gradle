@@ -2,6 +2,7 @@ group = 'org.springframework.samples'
 version = '1.0.0.SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'kotlin'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 //apply from: 'src/build/admin-tasks.gradle'
@@ -27,6 +28,7 @@ dependencies {
     testCompile 'pl.pragmatists:JUnitParams:1.1.0'
     //testCompile 'org.springframework:spring-test:3.1.0.M1'
     testCompile 'junit:junit:4.7'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
 }
 
 [compileJava, compileTestJava]*.options*.compilerArgs = ['-Xlint:all']
@@ -48,6 +50,25 @@ sourceSets {
     test {
         java { srcDir 'src/test' }
         resources { srcDir 'src/test' }
+    }
+}
+buildscript {
+    ext.kotlin_version = '1.1.4-3'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
