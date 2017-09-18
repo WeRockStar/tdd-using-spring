@@ -3,25 +3,25 @@ package com.bank.domain;
 import java.time.LocalTime;
 
 public class Time {
-    private LocalTime startDate;
-    private LocalTime endDate;
-    private LocalTime currentDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private LocalTime currentTime;
 
-    public Time(String currentDate, String startDate, String endDate) {
-        this.startDate = LocalTime.parse(startDate);
-        this.endDate = LocalTime.parse(endDate);
-        this.currentDate = LocalTime.parse(currentDate);
+    public Time(String currentTime, String startTime, String endTime) {
+        this.startTime = LocalTime.parse(startTime);
+        this.endTime = LocalTime.parse(endTime);
+        this.currentTime = LocalTime.parse(currentTime);
     }
 
-    public LocalTime getStartDate() {
-        return startDate;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public LocalTime getEndDate() {
-        return endDate;
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
-    public LocalTime getCurrentDate() {
-        return currentDate;
+    public LocalTime getCurrentTime() {
+        return currentTime;
     }
 }

@@ -10,8 +10,8 @@ public class TimePolicy {
     }
 
     public boolean isTimeValid() {
-        boolean isAfter = time.getCurrentDate().isAfter(time.getStartDate());
-        boolean isBefore = time.getCurrentDate().isBefore(time.getEndDate());
+        boolean isAfter = time.getCurrentTime().isAfter(time.getStartTime());
+        boolean isBefore = time.getCurrentTime().isBefore(time.getEndTime());
         return isAfter && isBefore;
     }
 }
