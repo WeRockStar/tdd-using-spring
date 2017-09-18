@@ -1,5 +1,6 @@
 package com.bank.service.internal;
 
+import com.bank.domain.Time;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
@@ -20,8 +21,9 @@ public class TimePolicyTest {
             "21:59"
     })
     public void current_time_should_valid_policy(String currentTime) {
-        TimePolicy timePolicy = new TimePolicy("05:59", "22:00");
-        boolean actual = timePolicy.isTimeValid(currentTime);
+        Time time = new Time(currentTime, "05:59", "22:00");
+        TimePolicy timePolicy = new TimePolicy(time);
+        boolean actual = timePolicy.isTimeValid();
         assertTrue(actual);
     }
 
@@ -32,8 +34,9 @@ public class TimePolicyTest {
     })
     public void change_start_and_end_time_should_valid_polity(String currentTime,
                                                               String startTime, String endTime) throws Exception {
-        TimePolicy timePolicy = new TimePolicy(startTime, endTime);
-        boolean actual = timePolicy.isTimeValid(currentTime);
+        Time time = new Time(currentTime, startTime, endTime);
+        TimePolicy timePolicy = new TimePolicy(time);
+        boolean actual = timePolicy.isTimeValid();
         assertTrue(actual);
     }
 }

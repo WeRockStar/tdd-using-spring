@@ -1,18 +1,17 @@
 package com.bank.service.internal;
 
-import java.time.LocalTime;
+import com.bank.domain.Time;
 
 public class TimePolicy {
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private Time time;
 
-    public TimePolicy(String startTime, String endTime) {
-        this.startTime = LocalTime.parse(startTime);
-        this.endTime = LocalTime.parse(endTime);
+    public TimePolicy(Time time) {
+        this.time = time;
     }
 
-    public boolean isTimeValid(String current) {
-        LocalTime currentTime = LocalTime.parse(current);
-        return currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
+    public boolean isTimeValid() {
+        boolean isAfter = time.getCurrentDate().isAfter(time.getStartDate());
+        boolean isBefore = time.getCurrentDate().isBefore(time.getEndDate());
+        return isAfter && isBefore;
     }
 }
