@@ -1,6 +1,7 @@
 package com.bank.service.internal;
 
 import com.bank.domain.InsufficientFundsException;
+import com.bank.domain.Time;
 import com.bank.domain.TransferReceipt;
 import com.bank.repository.AccountNotFoundException;
 import com.bank.repository.AccountRepository;
@@ -19,16 +20,19 @@ public class DefaultTransferServiceTests {
 
     private AccountRepository accountRepository;
     private TransferService transferService;
+    private TimePolicy timePolicy;
 
     @Before
     public void setUp() {
         accountRepository = new SimpleAccountRepository();
+        timePolicy = new TimePolicy(new Time("19:00", "06:00", "22:00"));
         FeePolicy feePolicy = new ZeroFeePolicy();
-        transferService = new DefaultTransferService(accountRepository, feePolicy);
+        transferService = new DefaultTransferService(accountRepository, feePolicy, timePolicy);
 
         assertThat(accountRepository.findById(A123_ID).getBalance(), equalTo(A123_INITIAL_BAL));
         assertThat(accountRepository.findById(C456_ID).getBalance(), equalTo(C456_INITIAL_BAL));
     }
+
     @Test
     public void testTransfer() throws InsufficientFundsException {
         double transferAmount = 100.00;
@@ -125,10 +129,19 @@ public class DefaultTransferServiceTests {
     public void testNonZeroFeePolicy() throws InsufficientFundsException {
         double flatFee = 5.00;
         double transferAmount = 10.00;
-        transferService = new DefaultTransferService(accountRepository, new FlatFeePolicy(flatFee));
+        transferService = new DefaultTransferService(accountRepository, new FlatFeePolicy(flatFee), timePolicy);
         transferService.transfer(transferAmount, A123_ID, C456_ID);
         assertThat(accountRepository.findById(A123_ID).getBalance(), equalTo(A123_INITIAL_BAL - transferAmount - flatFee));
         assertThat(accountRepository.findById(C456_ID).getBalance(), equalTo(C456_INITIAL_BAL + transferAmount));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void transfer_invalid_policy_should_see_exception() throws InsufficientFundsException{
+        double transferAmount = 100.00;
+        FeePolicy feePolicy = new ZeroFeePolicy();
+        TimePolicy timePolicy = new TimePolicy(new Time("23:00", "06:00", "22:00"));
+        DefaultTransferService transferService = new DefaultTransferService(accountRepository, feePolicy, timePolicy);
+        TransferReceipt transfer = transferService.transfer(transferAmount, A123_ID, C456_ID);
     }
 
 }

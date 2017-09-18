@@ -15,10 +15,12 @@ public class DefaultTransferService implements TransferService {
     private final AccountRepository accountRepository;
     private final FeePolicy feePolicy;
     private double minimumTransferAmount = 1.00;
+    private TimePolicy timePolicy;
 
-    public DefaultTransferService(AccountRepository accountRepository, FeePolicy feePolicy) {
+    public DefaultTransferService(AccountRepository accountRepository, FeePolicy feePolicy, TimePolicy timePolicy) {
         this.accountRepository = accountRepository;
         this.feePolicy = feePolicy;
+        this.timePolicy = timePolicy;
     }
 
     @Override
@@ -32,7 +34,9 @@ public class DefaultTransferService implements TransferService {
         if (amount < minimumTransferAmount) {
             throw new IllegalArgumentException(format("transfer amount must be at least $%.2f", minimumTransferAmount));
         }
-
+        if (!timePolicy.isTimeValid()) {
+            throw new IllegalArgumentException("Not allow transfer at 22:00 - 05:59");
+        }
         TransferReceipt receipt = new TransferReceipt();
 
         Account srcAcct = accountRepository.findById(srcAcctId);
