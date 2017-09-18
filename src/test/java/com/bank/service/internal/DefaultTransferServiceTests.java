@@ -1,13 +1,5 @@
 package com.bank.service.internal;
 
-import static com.bank.repository.internal.SimpleAccountRepository.Data.*;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import com.bank.domain.InsufficientFundsException;
 import com.bank.domain.TransferReceipt;
 import com.bank.repository.AccountNotFoundException;
@@ -15,9 +7,13 @@ import com.bank.repository.AccountRepository;
 import com.bank.repository.internal.SimpleAccountRepository;
 import com.bank.service.FeePolicy;
 import com.bank.service.TransferService;
-import com.bank.service.internal.FlatFeePolicy;
-import com.bank.service.internal.DefaultTransferService;
-import com.bank.service.internal.ZeroFeePolicy;
+import org.junit.Before;
+import org.junit.Test;
+
+import static com.bank.repository.internal.SimpleAccountRepository.Data.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class DefaultTransferServiceTests {
 
@@ -33,7 +29,6 @@ public class DefaultTransferServiceTests {
         assertThat(accountRepository.findById(A123_ID).getBalance(), equalTo(A123_INITIAL_BAL));
         assertThat(accountRepository.findById(C456_ID).getBalance(), equalTo(C456_INITIAL_BAL));
     }
-
     @Test
     public void testTransfer() throws InsufficientFundsException {
         double transferAmount = 100.00;
@@ -135,4 +130,5 @@ public class DefaultTransferServiceTests {
         assertThat(accountRepository.findById(A123_ID).getBalance(), equalTo(A123_INITIAL_BAL - transferAmount - flatFee));
         assertThat(accountRepository.findById(C456_ID).getBalance(), equalTo(C456_INITIAL_BAL + transferAmount));
     }
+
 }

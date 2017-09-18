@@ -1,15 +1,14 @@
 package com.bank.service.internal;
 
-import static java.lang.String.format;
-
-import org.springframework.transaction.annotation.Transactional;
-
 import com.bank.domain.Account;
 import com.bank.domain.InsufficientFundsException;
 import com.bank.domain.TransferReceipt;
 import com.bank.repository.AccountRepository;
 import com.bank.service.FeePolicy;
 import com.bank.service.TransferService;
+import org.springframework.transaction.annotation.Transactional;
+
+import static java.lang.String.format;
 
 public class DefaultTransferService implements TransferService {
 
