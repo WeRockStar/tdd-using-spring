@@ -2,7 +2,7 @@ package com.bank.service.internal
 
 import com.bank.domain.Time
 
-class TimePolicy(private val time: Time) {
+open class TimePolicy constructor(private val time: Time) {
 
     fun isTimeValid(): Boolean {
         val isAfter = time.currentTime.isAfter(time.startTime)
