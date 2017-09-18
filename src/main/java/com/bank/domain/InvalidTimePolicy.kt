@@ -1,3 +1,3 @@
 package com.bank.domain
 
-class InvalidTimePolicy(message: String) : Exception(message)
+class InvalidTimePolicy(message: String) : RuntimeException(message)

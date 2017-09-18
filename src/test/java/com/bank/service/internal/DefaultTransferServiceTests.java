@@ -1,6 +1,7 @@
 package com.bank.service.internal;
 
 import com.bank.domain.InsufficientFundsException;
+import com.bank.domain.InvalidTimePolicy;
 import com.bank.domain.Time;
 import com.bank.domain.TransferReceipt;
 import com.bank.repository.AccountNotFoundException;
@@ -135,8 +136,8 @@ public class DefaultTransferServiceTests {
         assertThat(accountRepository.findById(C456_ID).getBalance(), equalTo(C456_INITIAL_BAL + transferAmount));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void transfer_invalid_policy_should_see_exception() throws InsufficientFundsException{
+    @Test(expected = InvalidTimePolicy.class)
+    public void transfer_invalid_policy_should_see_exception() throws InsufficientFundsException, InvalidTimePolicy{
         double transferAmount = 100.00;
         FeePolicy feePolicy = new ZeroFeePolicy();
         TimePolicy timePolicy = new TimePolicy(new Time("23:00", "06:00", "22:00"));

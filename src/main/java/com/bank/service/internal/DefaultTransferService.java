@@ -31,7 +31,7 @@ public class DefaultTransferService implements TransferService {
 
     @Override
     @Transactional
-    public TransferReceipt transfer(double amount, String srcAcctId, String dstAcctId) throws InsufficientFundsException, InvalidTimePolicy {
+    public TransferReceipt transfer(double amount, String srcAcctId, String dstAcctId) throws InsufficientFundsException {
         if (amount < minimumTransferAmount) {
             throw new IllegalArgumentException(format("transfer amount must be at least $%.2f", minimumTransferAmount));
         }

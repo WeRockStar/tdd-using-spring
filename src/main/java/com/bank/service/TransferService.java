@@ -22,7 +22,7 @@ import com.bank.domain.TransferReceipt;
 public interface TransferService {
 
     TransferReceipt transfer(double amount, String srcAcctId, String destAcctId)
-            throws InsufficientFundsException, InvalidTimePolicy;
+            throws InsufficientFundsException;
 
     void setMinimumTransferAmount(double minimumTransferAmount);
 }
