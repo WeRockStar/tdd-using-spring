@@ -22,7 +22,7 @@ class TimePolicyTest {
 
     @Test
     @Parameters("06:00 | 05:00 | 21:00", "10:01 | 10:00 | 21:00")
-    fun change_start_and_end_time_should_valid_polity(currentTime: String,
+    fun change_start_and_end_time_should_valid_policy(currentTime: String,
                                                       startTime: String, endTime: String) {
         val time = Time(currentTime, startTime, endTime)
         val timePolicy = TimePolicy(time)
